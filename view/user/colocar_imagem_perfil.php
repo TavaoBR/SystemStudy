@@ -16,14 +16,9 @@ $query_->execute();
 
 $select_user_assoc = $query_->fetch(PDO::FETCH_ASSOC);
 
-$url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome";
-$url_estado = curl_init($url);
-curl_setopt($url_estado, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($url_estado, CURLOPT_SSL_VERIFYPEER, false);
-$resultado = json_decode(curl_exec($url_estado));
+
 extract($select_user_assoc);
 
-//api estados
 
 
 ?>
@@ -32,7 +27,7 @@ extract($select_user_assoc);
 
     <head>
         <meta charset="utf-8">
-        <title>Complete Cadastro</title>
+        <title>Enviar imagem perfil</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
         <meta content="Coderthemes" name="author">
@@ -83,7 +78,7 @@ extract($select_user_assoc);
                         <!-- end row -->
                         <div class="main-body">
 			<div class="row">
-                <h2>Complete seu cadastro</h2>
+                <h2>Enviar imagem perfil: <?php echo $nome_usuario?></h2>
 				<div class="col-lg-8">
 					<div class="card">
 						<div class="card-body">
@@ -103,75 +98,29 @@ extract($select_user_assoc);
 									<input type="text" class="form-control" value="<?php echo $nome_usuario?>">
 								</div>
 							</div>
+                            <hr>
+                           <form method="POST" action="../../controller/inserts/upload_imagem.php" enctype="multipart/form-data">
+                               <?php 
+                               if(isset( $_SESSION['imagem_enviada'])){
+                                 echo  $_SESSION['imagem_enviada'];
+                                 unset( $_SESSION['imagem_enviada']);
+                               }
+                               
+                               ?>
+                               <input type="hidden" name="fk_user" value="<?php echo $user_id?>"> 
                             <div class="row mb-3">
 								<div class="col-sm-3">
-                                <h5 class="mb-0"> Deseja colocar imagem de perfil?
-                                    se sim.</h5>
-                                </div>
+									<h5 class="mb-0">Escolha um imagem</h5>
+								</div>
 								<div class="col-sm-9 text-secondary">
-									<a href="../user/colocar_imagem_perfil.php?id_user=<?php echo $user_id?>" target="_blank" class="btn btn-success">clique aqui</a>
+									<input type="file" name="imagem" class="form-control" accept=".jpg, .jpeg, .png">
 								</div>
 							</div>
                             <hr>
-                           <form method="POST" action="../../controller/inserts/complete_infor_user.php"> 
-                            <div class="row mb-3">
-								<div class="col-sm-3">
-									<h5 class="mb-0">Email:</h5>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<input type="text" name="email" class="form-control">
-								</div>
-							</div>
-                            <hr>
-							<div class="row mb-3">
-								<div class="col-sm-3">
-									<h5 class="mb-0">Estado:</h5>
-								</div>
-								<div class="col-sm-9 text-secondary">
-									<?php 
-                                    
-                                    echo "<select name = 'estado'>";
-                                    echo "<option>Selecione uma opção</option>"; 
-                                      foreach($resultado as $linha){
-                                         echo "<option value ='$linha->nome'>$linha->nome</option>";
-                                      }
-
-                                    echo "</select>"
-                                   
-                                   
-                                    ?>
-								</div>
-                                  
-                                <br>
-                                <br>
-                                <hr>
-
-                                <div class="row mb-3">
-								<div class="col-sm-3">
-									<h5 class="mb-0">Materias Favoritas:</h5>
-								</div>
-								<div class="col-sm-9 text-secondary">
-                                  <?php 
-                                    
-                                    $select_materias = $conectar->prepare("SELECT * FROM materias");
-                                    $select_materias->execute();
-                                    
-                                    while($select_materias_assoc = $select_materias->fetch(PDO::FETCH_ASSOC)){
-                                         extract($select_materias_assoc);
-                                         echo "<label>$nome</label>";
-                                         echo "&nbsp;&nbsp;<input type='checkbox'><br>";
-                                             
-                                    }
-                                    
-                                  
-                                  ?>
-								</div>
-							</div>
-							</div>
 							<div class="row">
 								<div class="col-sm-3"></div>
 								<div class="col-sm-9 text-secondary">
-									<button class="btn btn-success">Salvar</button>
+									<button class="btn btn-success" name="Salvarimagem">Salvar</button>
 								</div>
 							</div>
                         </form>
