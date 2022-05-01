@@ -82,6 +82,11 @@ extract($select_user_assoc);
                        
                         <!-- end row -->
                         <div class="main-body">
+            <?php 
+             if($perfil_completo == 0){
+
+             
+            ?>                
 			<div class="row">
                 <h2>Complete seu cadastro</h2>
 				<div class="col-lg-8">
@@ -113,13 +118,30 @@ extract($select_user_assoc);
 								</div>
 							</div>
                             <hr>
-                           <form method="POST" action="../../controller/inserts/complete_infor_user.php"> 
+                           <form method="POST" action="../../controller/inserts/complete_infor_user.php">
+                               <input type="hidden" name="fk_user" value="<?php echo $id?>"> 
+                               <?php 
+                                 if(isset($_SESSION['selecione_estado'])){
+                                       echo $_SESSION['selecione_estado'];
+                                       unset($_SESSION['selecione_estado']);
+                                 }
+                              
+                                  if(isset($_SESSION['selecione_materia'])){
+                                     echo $_SESSION['selecione_materia'];
+                                     unset($_SESSION['selecione_materia']);
+                                  }
+
+                                  if(isset( $_SESSION['erro'])){
+                                      echo  $_SESSION['erro'];
+                                      unset($_SESSION['erro']);
+                                  }
+                               ?>
                             <div class="row mb-3">
 								<div class="col-sm-3">
 									<h5 class="mb-0">Email:</h5>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input type="text" name="email" class="form-control">
+									<input type="text" name="email" value="<?php  if(isset($_SESSION['email'])){echo $_SESSION['email']; unset($_SESSION['email']);}?>" class="form-control" required>
 								</div>
 							</div>
                             <hr>
@@ -130,8 +152,8 @@ extract($select_user_assoc);
 								<div class="col-sm-9 text-secondary">
 									<?php 
                                     
-                                    echo "<select name = 'estado'>";
-                                    echo "<option>Selecione uma opção</option>"; 
+                                    echo "<select name = 'estado' required>";
+                                    echo "<option value = ''>Selecione uma opção</option>"; 
                                       foreach($resultado as $linha){
                                          echo "<option value ='$linha->nome'>$linha->nome</option>";
                                       }
@@ -159,11 +181,9 @@ extract($select_user_assoc);
                                     while($select_materias_assoc = $select_materias->fetch(PDO::FETCH_ASSOC)){
                                          extract($select_materias_assoc);
                                          echo "<label>$nome</label>";
-                                         echo "&nbsp;&nbsp;<input type='checkbox'><br>";
+                                         echo "&nbsp;&nbsp;<input type='checkbox' name='grade[]' value='$nome'><br>";
                                              
                                     }
-                                    
-                                  
                                   ?>
 								</div>
 							</div>
@@ -171,7 +191,7 @@ extract($select_user_assoc);
 							<div class="row">
 								<div class="col-sm-3"></div>
 								<div class="col-sm-9 text-secondary">
-									<button class="btn btn-success">Salvar</button>
+									<button class="btn btn-success" name="Salvar">Salvar</button>
 								</div>
 							</div>
                         </form>
@@ -179,6 +199,16 @@ extract($select_user_assoc);
 					</div>
 				</div>
 			</div>
+            <?php 
+             }else{ 
+                echo "
+                 <div class='alert alert-success'>
+                   Você já finalizou o resto do cadastro do seu perfil
+                   <a href='../user/perfil.php?id_user=$id'>Veja seu perfil</a>
+                 </div>
+                ";
+             }
+            ?>
 		</div>
 
                         <!-- end row -->

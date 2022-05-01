@@ -29,6 +29,7 @@ if($perfil_completo > 0){
     $assoc_user_info = $query_user_info->fetch(PDO::FETCH_ASSOC);
     
     extract($assoc_user_info);
+
    
 }
 
@@ -103,7 +104,7 @@ if($perfil_completo > 0){
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <img src="<?php echo "../asset/image_user/$id/$imagem_perfil" ?>" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4><?php echo $nome_completo?></h4>
                       <button class="btn btn-primary">Follow</button>
@@ -112,27 +113,8 @@ if($perfil_completo > 0){
                   </div>
                 </div>
               </div>
-              <div class="card mt-3">
-                <ul class="list-group list-group-flush">
-                  <h3>Materias favortitas</h3>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <span class="text-secondary">https://bootdey.com</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <span class="text-secondary">https://bootdey.com</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <span class="text-secondary">https://bootdey.com</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <span class="text-secondary">https://bootdey.com</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <span class="text-secondary">https://bootdey.com</span>
-                  </li>
-                </ul>
-              </div>
             </div>
+          
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
@@ -147,14 +129,21 @@ if($perfil_completo > 0){
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
+                      <h6 class="mb-0">User Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                       <?php echo $nome_usuario?>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                     <?php echo $email?>
                     </div>
                   </div>
-                  <hr>
-                  <hr>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
@@ -165,12 +154,20 @@ if($perfil_completo > 0){
                     </div>
                   </div>
                   <hr>
-                  <hr>
                   <div class="row">
-                    <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Materias favortitas</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                       <?php echo $grade?>
                     </div>
                   </div>
+                  <hr>
+                  <!--<div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" href="#">Edit</a>
+                    </div>
+                  </div>-->
                 </div>
               </div>
 
