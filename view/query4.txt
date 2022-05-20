@@ -1,0 +1,22 @@
+create table plano_estudo(
+id_plano_estudo int not null auto_increment,
+fk_user int,
+nome_do_plano varchar(250),
+descricao_plano text,
+materia varchar(250),
+urgencia_plano varchar(60),
+status_plano varchar(60),
+dia_estudo varchar(120),
+primary key (id_plano_estudo),
+foreign key (fk_user) references user(id)
+);
+
+create table tarefas_plano_estudo(
+id_tarefas int not null auto_increment,
+fk_plano int,
+fk_user int,
+nome_tarefa varchar(120),
+data_execucao date,
+status_tarefa varchar(60),
+
+);

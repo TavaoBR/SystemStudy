@@ -1,0 +1,63 @@
+create table seguir(
+id int not null auto_increment,
+fk_user int,
+fK_user_seguidor int,
+nome_seguidor varchar(120),
+date_seguiu date,
+time_seguiu time,
+primary key (id),
+foreign key (fk_user) references user(id),
+foreign key (fK_user_seguidor) references user(id)
+);
+
+create table publicacao_feed(
+id_feed int not null auto_increment,
+fk_user_publicao int,
+titulo_publicao varchar(100),
+mensagem text,
+curtidas int, 
+data_publicao date,
+time_publicao time,
+primary key(id_feed),
+foreign key (fk_user_publicao) references user(id)
+);
+
+create table publicacao_grupo(
+id_feed int not null auto_increment,
+fk_user_publicao int,
+fk_grupo int,
+titulo_publicao varchar(100),
+mensagem text,
+curtidas int, 
+data_publicao date,
+time_publicao time,
+primary key(id_feed),
+foreign key (fk_user_publicao) references user(id),
+foreign key (fk_grupo) references group_user(id)
+);
+
+create table publicacao_grupo_estudo(
+id_feed_grupo int not null auto_increment,
+fk_user_publicao int,
+fk_grupo_estudo int,
+titulo_publicao varchar(100),
+mensagem text,
+curtidas int, 
+data_publicao date,
+time_publicao time,
+primary key(id_feed_grupo),
+foreign key (fk_user_publicao) references user(id),
+foreign key (fk_grupo_estudo) references grupo_estudo(id_grupo_estudo)
+);
+
+create table curtir_publicacao_feed(
+
+);
+
+create table curtir_publicacao_grupo(
+
+);
+
+create table curtie_publicacao_grupo_estudo(
+
+);

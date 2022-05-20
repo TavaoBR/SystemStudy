@@ -1,0 +1,50 @@
+create table grupo_estudo (
+id_grupo_estudo int not null auto_increment,
+fk_user int,
+nome_criador varchar(120),
+total_integrantes int,
+criado_date date,
+primary key (id_grupo_estudo),
+foreign key (fk_user) references user(id)
+);
+
+
+create table integrante_grupo_estudo(
+id int not null auto_increment,
+fk_grupo_estudo int,
+fk_user int, 
+nome_integrante varchar(120),
+nivel int, 
+data_entrada date,
+primary key (id),
+foreign key (fk_grupo_estudo) references grupo_estudo(id_grupo_estudo),
+foreign key (fk_user) references user(id)
+); 
+
+
+
+create table group_user(
+id int not null auto_increment,
+fk_user int,
+nome_group varchar(60),
+created date,
+created_time time,
+primary key (id), 
+foreign key (fk_user) references user(id)
+);
+
+select * from group_user;
+
+select * from integrante_grupo;
+
+create table integrante_grupo(
+id int not null auto_increment,
+fk_grupo int,
+fk_user int, 
+nome_integrante varchar(120),
+nivel int, 
+data_entrada date,
+primary key (id),
+foreign key (fk_grupo) references group_user(id),
+foreign key (fk_user) references user(id)
+); 

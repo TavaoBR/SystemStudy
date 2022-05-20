@@ -1,0 +1,171 @@
+create database bataman;
+use bataman;
+
+select * from user;
+select * from user_informacoes;
+select * from historico_imagem;
+delete from user_informacoes where id = 1;
+
+create table historico_imagem(
+id int not null auto_increment,
+fk_user int, 
+nome_imagem text,
+data_envio date,
+primary key (id),
+foreign key (fk_user) references user(id)
+);
+
+create table materias(
+id int not null auto_increment,
+nome varchar(60),
+primary key(id)
+);
+
+INSERT INTO materias(nome) VALUE ('Língua Portuguesa');
+INSERT INTO materias(nome) VALUE ('Produção de Texto');
+INSERT INTO materias(nome) VALUE ('Língua Inglesa');
+INSERT INTO materias(nome) VALUE ('História');
+INSERT INTO materias(nome) VALUE ('Geografia');
+INSERT INTO materias(nome) VALUE ('Filosofia');
+INSERT INTO materias(nome) VALUE ('Sociologia');
+INSERT INTO materias(nome) VALUE ('Matemática');
+INSERT INTO materias(nome) VALUE ('Física');
+INSERT INTO materias(nome) VALUE ('Química');
+INSERT INTO materias(nome) VALUE ('Biologia');
+
+UPDATE user SET perfil_completo = 0 WHERE id ;
+
+create table user(
+id int not null auto_increment,
+nome_completo varchar(200),
+nome_usuario varchar(60),
+senha_usuario varchar(150),
+primary key (id)
+);
+
+create table user_informacoes(
+id int not null auto_increment,
+fk_user int,
+estado varchar(120),
+cidade varchar(120),
+email varchar(60),
+telefone varchar(60),
+primary key (id),
+foreign key (fk_user) references user(id)
+);
+
+INSERT INTO user_informacoes(fk_user, email, cidade, telefone, estado) VALUES (19, 'barryalen@gmail.com','Central City','9999999999','California');
+
+create table projects(
+id int not null auto_increment,
+fk_user int,
+criado_projeto varchar(120),
+nome_project varchar(50),
+status varchar(50),
+primary key (id),
+foreign key (fk_user) references user(id)
+);
+
+create table historico_projects(
+id int not null auto_increment,
+fk_project int,
+status varchar(50),
+data_modify date,
+time_modify time,
+primary key (id),
+foreign key (fk_project) references projects(id)
+);
+
+create table grade_curricular(
+id int not null auto_increment,
+fk_user int,
+nome varchar(60),
+primary key (id),
+foreign key (fk_user) references user(id)
+);
+
+create table rede_social(
+id int not null auto_increment,
+fk_user int,
+rede varchar(120),
+nome_user_rede varchar(120),
+link_perfil text,
+primary key (id),
+foreign key (fk_user) references user(id)
+);
+
+create table sistema(
+id_sistema int not null auto_increment,
+nome_sistema text,
+primary key (id_sistema)
+);
+
+create table user_permissao(
+id_permissao int not null auto_increment,
+fk_user int,
+fk_sistema int,
+nivel_acesso int,
+primary key(id_permissao),
+foreign key (fk_user) references user(id),
+foreign key (fk_sistema) references sistema(id_sistema)
+);
+
+
+create table menu_custom(
+id_menu int not null auto_increment,
+fk_user int,
+fk_permissao int,
+fk_sistema int,
+nome_menu text,
+icon_menu varchar(25),
+primary key (id_menu), 
+foreign key (fk_user) references user(id),
+foreign key (fk_sistema) references sistema(id_sistema),
+foreign key (fk_permissao) references user_permissao(id_permissao)
+);
+
+create table group_user(
+id int not null auto_increment,
+fk_user int,
+nome_group varchar(60),
+created date,
+created_time time,
+primary key (id), 
+foreign key (fk_user) references user(id)
+);
+
+select * from group_user;
+
+create table friends(
+id int not null auto_increment,
+fk_user int,
+id_amigo int,
+nome_amigo varchar(65),
+primary key (id), 
+foreign key (fk_user) references user(id)
+);
+
+create table friends_request(
+id_request int not null auto_increment,
+fk_user int, 
+id_for_invite int,
+day_invite date,
+time_invite time,
+primary key (id_request), 
+foreign key (fk_user) references user(id)
+);
+
+create table notification_friend_request(
+id int not null auto_increment,
+fk_request int,
+id_user int,
+nome_envio varchar(65),
+data_notificacao date,
+hora_notifiacao time,
+primary key (id), 
+foreign key (fk_request) references friends_request(id_request)
+);
+
+
+
+
