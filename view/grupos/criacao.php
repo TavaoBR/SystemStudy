@@ -1,8 +1,11 @@
-<?php 
+<?php
+include_once("../../controller/user/function.php"); 
+include_once("../../model/conection/conexao.php");
 session_start();
+verifica_sessao();
 ?>
 <!DOCTYPE html>
-    <html lang="en">
+    <html lang="pt-br">
 
     <head>
         <meta charset="utf-8">
@@ -57,89 +60,34 @@ session_start();
 
                         <!-- end row -->
 
-                <?php 
-                
-                 if(!isset($_SESSION['usuarioID'])){
-                ?>
+
 
 <section class="contact-clean">
-       <form method="POST" action="../../controller/inserts/insert_user.php">
+       <form method="POST" action="../../controller/inserts/grupo.php">
+          <?php 
+           if(isset($_SESSION['campo'])){
+                 echo $_SESSION['campo'];
+                 unset($_SESSION['campo']);
+           }
 
+           if(isset($_SESSION['sucesso'])){
+              echo $_SESSION['sucesso'];
+              unset($_SESSION['sucesso']);
+           } 
 
-            <h2 class="text-center">Resgistro de Usuario</h2>
-            <?php 
-            if(isset($_SESSION['sucesso'])){
-                echo $_SESSION['sucesso'];
-                unset($_SESSION['sucesso']);
-            }
+           if(isset($_SESSION['erro'])){
+            echo  $_SESSION['erro'];
+            unset( $_SESSION['erro']);
+           }
+          
+          ?>
 
-            if(isset($_SESSION['error'])){
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
-            }
-
-            if(isset($_SESSION['preencha_campos'])){
-                echo $_SESSION['preencha_campos'];
-                unset($_SESSION['preencha_campos']);
-            }
-
-            if(isset($_SESSION['preencha_senha'])){
-                echo $_SESSION['preencha_senha'];
-                unset($_SESSION['preencha_senha']);
-            }
-
-            if(isset($_SESSION['preencha_user'])){
-                echo $_SESSION['preencha_user'];
-                unset($_SESSION['preencha_user']);
-            }
-
-            if(isset($_SESSION['preencha_name'])){
-                echo $_SESSION['preencha_name'];
-                unset($_SESSION['preencha_name']);
-            }
-
-            
-
-            if(isset($_SESSION['usuario_cadastro'])){
-                echo $_SESSION['usuario_cadastro'];
-                unset($_SESSION['usuario_cadastro']);
-            }
-
-            
-
-            if(isset($_SESSION['sucesso'])){
-                echo $_SESSION['sucesso'];
-                unset($_SESSION['sucesso']);
-            }
-
-            if(isset($_SESSION['error'])){
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
-            }
-
-            if(isset($_SESSION['senhas_nao_batem'])){
-                echo $_SESSION['senhas_nao_batem'];
-                 unset($_SESSION['senhas_nao_batem']);
-            }
-       ?>
-            <div class="mb-3"><input class="form-control" type="text" value="<?php if(isset($_SESSION['name'])){ echo $_SESSION['name']; unset($_SESSION['name']);}?>" name="nome_completo" placeholder="Nome Completo"></div>
-            <input class="form-control" type="text" name="nome_usuario" value="<?php if(isset($_SESSION['user'])){ echo $_SESSION['user']; unset($_SESSION['user']);}?>" placeholder="User Name">
-            <div class="mb-3"></div><input class="form-control" type="password" value="<?php if(isset($_SESSION['senha'])){ echo $_SESSION['senha']; unset($_SESSION['senha']);}?>" name="senha_usuario_confirma" placeholder="Digite uma senha">
-            <div class="mb-3"></div><input class="form-control" type="password" value="" name="senha_usuario" placeholder="Confirme a senha">
+            <h2 class="text-center">Criar grupo</h2>
+            <div class="mb-3"><input class="form-control" type="text"  name="nome_group" placeholder="Nome do grupo"></div>
             <div class="mb-3"></div>
-            <div class="mb-3"><button name="Cadastro" class="btn btn-primary">Registrar</button></div>
+            <div class="mb-3"><button name="Criar" class="btn btn-primary">Criar</button></div>
         </form>
     </section>
-    <?php 
-       }else{
-           echo "
-           <br>
-             <div class='alert alert-success'>
-                Você já está cadastrado e logado 
-             </div>
-           ";
-       }    
-    ?>
 
                         <!-- end row -->
 

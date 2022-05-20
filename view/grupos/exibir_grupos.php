@@ -1,12 +1,31 @@
 <?php 
 session_start();
+
+include_once("../../model/conection/conexao.php");
+
+//Filtro pra capturar usuario
+$user_id = filter_input(INPUT_GET, 'id_user', FILTER_SANITIZE_NUMBER_INT);
+
+//inicio query de consulta do usuario
+$select_user_ = "SELECT * FROM user WHERE id = :id";
+$query_ = $conectar->prepare($select_user_);
+
+$query_->bindParam(':id', $user_id);
+
+$query_->execute();
+
+$select_user_assoc = $query_->fetch(PDO::FETCH_ASSOC);
+extract($select_user_assoc);
+
+//FIM da query
 ?>
+
 <!DOCTYPE html>
-    <html lang="en">
+    <html lang="pt-br">
 
     <head>
         <meta charset="utf-8">
-        <title>Dashboard | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>Grupos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
         <meta content="Coderthemes" name="author">
@@ -16,7 +35,7 @@ session_start();
         <!-- third party css -->
         <link href="../asset/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="../asset/css/login.css">
+        <link rel="stylesheet" href="../asset/css/grupo_card.css">
         <!-- third party css end -->
 
         <!-- App css -->
@@ -54,92 +73,38 @@ session_start();
                         <!-- start page title -->
                         <!-- end page title -->
                         
-
+                       
                         <!-- end row -->
+                        <div class="main-body">
+    
+                            <!-- Breadcrumb -->
+                            <!-- /Breadcrumb -->
+                                <center><h2>Grupos</h2></center>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card p-3 mb-2">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div class="icon"> <i class="fa-solid fa-people-group"></i> </div>
+                                                    <div class="ms-2 c-details">
+                                                        <h6 class="mb-0">Criado: Josiscleyson</h6> <span>Data:</span>
+                                                    </div>
+                                                </div>
+                                                <div> <span>Status</span> </div>
+                                            </div>
+                                            <div class="mt-5">
+                                                <h3 class="heading">Nome Grupo</h3>
+                                                <div class="mt-5">
+                                                    <div class="mt-3"><a href="#" class="btn btn-success">Visualizar</a></div>
+                                                    <div class="mt-3"> <span class="text1">21 <span class="text2">Membros</span></span> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+</div>
 
-                <?php 
-                
-                 if(!isset($_SESSION['usuarioID'])){
-                ?>
-
-<section class="contact-clean">
-       <form method="POST" action="../../controller/inserts/insert_user.php">
-
-
-            <h2 class="text-center">Resgistro de Usuario</h2>
-            <?php 
-            if(isset($_SESSION['sucesso'])){
-                echo $_SESSION['sucesso'];
-                unset($_SESSION['sucesso']);
-            }
-
-            if(isset($_SESSION['error'])){
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
-            }
-
-            if(isset($_SESSION['preencha_campos'])){
-                echo $_SESSION['preencha_campos'];
-                unset($_SESSION['preencha_campos']);
-            }
-
-            if(isset($_SESSION['preencha_senha'])){
-                echo $_SESSION['preencha_senha'];
-                unset($_SESSION['preencha_senha']);
-            }
-
-            if(isset($_SESSION['preencha_user'])){
-                echo $_SESSION['preencha_user'];
-                unset($_SESSION['preencha_user']);
-            }
-
-            if(isset($_SESSION['preencha_name'])){
-                echo $_SESSION['preencha_name'];
-                unset($_SESSION['preencha_name']);
-            }
-
-            
-
-            if(isset($_SESSION['usuario_cadastro'])){
-                echo $_SESSION['usuario_cadastro'];
-                unset($_SESSION['usuario_cadastro']);
-            }
-
-            
-
-            if(isset($_SESSION['sucesso'])){
-                echo $_SESSION['sucesso'];
-                unset($_SESSION['sucesso']);
-            }
-
-            if(isset($_SESSION['error'])){
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
-            }
-
-            if(isset($_SESSION['senhas_nao_batem'])){
-                echo $_SESSION['senhas_nao_batem'];
-                 unset($_SESSION['senhas_nao_batem']);
-            }
-       ?>
-            <div class="mb-3"><input class="form-control" type="text" value="<?php if(isset($_SESSION['name'])){ echo $_SESSION['name']; unset($_SESSION['name']);}?>" name="nome_completo" placeholder="Nome Completo"></div>
-            <input class="form-control" type="text" name="nome_usuario" value="<?php if(isset($_SESSION['user'])){ echo $_SESSION['user']; unset($_SESSION['user']);}?>" placeholder="User Name">
-            <div class="mb-3"></div><input class="form-control" type="password" value="<?php if(isset($_SESSION['senha'])){ echo $_SESSION['senha']; unset($_SESSION['senha']);}?>" name="senha_usuario_confirma" placeholder="Digite uma senha">
-            <div class="mb-3"></div><input class="form-control" type="password" value="" name="senha_usuario" placeholder="Confirme a senha">
-            <div class="mb-3"></div>
-            <div class="mb-3"><button name="Cadastro" class="btn btn-primary">Registrar</button></div>
-        </form>
-    </section>
-    <?php 
-       }else{
-           echo "
-           <br>
-             <div class='alert alert-success'>
-                Você já está cadastrado e logado 
-             </div>
-           ";
-       }    
-    ?>
+                        </div>
 
                         <!-- end row -->
 
